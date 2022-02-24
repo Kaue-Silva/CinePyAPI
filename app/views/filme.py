@@ -29,9 +29,10 @@ class CinepyView(FlaskView):
         filme.sinopse()
         filme.diretor()
         filme.genero()
+        filme.capa()
         filme.sair()
-        filmes = filme.filme_dados()
-        
-        return jsonify(filmes)
+        filme = filme.filme_dados()
+        print(filme)
+        return jsonify(filme)
 
 CinepyView.register(app)

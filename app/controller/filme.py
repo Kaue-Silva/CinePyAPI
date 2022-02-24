@@ -1,7 +1,10 @@
+import base64
 from datetime import datetime
 from random import choice
 from time import sleep
+from urllib import request
 
+from itsdangerous import base64_encode
 from selenium import webdriver
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         WebDriverException)
@@ -45,6 +48,7 @@ class EscolhaFilme:
         titulos = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a[2]/div/h1')
         for titulo in titulos:
             titulo = titulo.text
+            titulo = str(titulo).strip()
             self.filmes.append({"titulo":titulo})
     
     def data_estreia(self):
@@ -81,7 +85,10 @@ class EscolhaFilme:
     
     def diretor(self):
         # Obtendo diretor e adicionando ao Json
-        diretor = self.driver.find_element_by_xpath('//div [@class="no-result-details"]/ul/li/span[@itemprop="director"]')
+        # diretor = self.driver.find_element_by_xpath('//div [@class="no-result-details"]/ul/li/span[@itemprop="director"]')
+        diretor = WebDriverWait(self.driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, '//div [@class="no-result-details"]/ul/li/span[@itemprop="director"]'))
+        )
         diretor = diretor.text
         self.filme["diretor"] = diretor
 
@@ -97,6 +104,21 @@ class EscolhaFilme:
             generos_text += genero
         
         self.filme["generos"] = generos_text.title()
+    
+    def capa(self):
+        capa = self.driver.find_element_by_xpath('//img [@class="pb-avatar-image akamai-img-manager"]')
+        # Obtendo Url da imagem
+        capa_url = capa.get_property("src")
+        # Definindo local para imagem
+        local = 'app/static/images/capa.png'
+        # Download da imagem
+        request.urlretrieve(capa_url, local)
+        
+        # Convetendo imagem em Base64
+        with open(local, "rb") as imagem: 
+            capa_base64 = base64.b64encode(imagem.read())
+        # Adicionando ao Json
+        self.filme["capa"] = str(capa_base64)
     
     def filme_dados(self):
         # Retornando filme sorteado
