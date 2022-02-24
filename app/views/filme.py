@@ -21,6 +21,8 @@ class CinepyView(FlaskView):
         # Executando Consulta
         filme = EscolhaFilme(data, cidade)
         filme.pagina()
+        # Filtrando os filmes por data
+        filme.filtro_data()
 
         return jsonify({"data":data, "cidade":cidade})
 
