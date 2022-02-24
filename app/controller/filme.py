@@ -40,12 +40,16 @@ class EscolhaFilme:
         self.driver.get(url)
 
     def titulo(self):
+        # Pegando o titulo de todos os filmes
+        # e Adicionando a uma lista como objeto
         titulos = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a[2]/div/h1')
         for titulo in titulos:
             titulo = titulo.text
             self.filmes.append({"titulo":titulo})
     
     def data_estreia(self):
+        # Pegando a data de todos os filmes
+        # e Adicionando a uma lista como objeto
         datas_estreia = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a/div[2]/div/span')
         for i, data_estreia in enumerate(datas_estreia):
             data_estreia = data_estreia.text
@@ -62,6 +66,13 @@ class EscolhaFilme:
         
         # Sorteando filme aleatorio
         self.filme = choice(filmes)
+    
+    # Entrando na pagina do filme sorteado
+    def filme_pagina(self):
+        filme_sorteado = self.filme['titulo']
+        filme = self.driver.find_element_by_xpath(f'//h1 [text()="{filme_sorteado}"]')
+        filme.click()
+    
     
     def filme_dados(self):
         # Retornando filme sorteado
