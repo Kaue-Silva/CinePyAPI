@@ -1,8 +1,13 @@
 from datetime import datetime
+from time import sleep
 
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import (StaleElementReferenceException,
+                                        WebDriverException)
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 # Configurações Selenium
 options = Options()
@@ -16,6 +21,8 @@ options.headless = False
 
 
 class EscolhaFilme:
+    filmes = []
+    
     # Inicializando Selenium
     def __init__(self, data, cidade):
         try:
@@ -28,18 +35,15 @@ class EscolhaFilme:
     # Acessando Pagina
     def pagina(self):
         # Configurando Url
-        url = f"https://www.ingresso.com/filmes?city={self.cidade}&partnership=home&target=em-cartaz"
+        url = f"https://www.ingresso.com/filmes?city={self.cidade}&partnership=home&target=em-breve"
         self.driver.get(url)
 
-    def filtro_data(self):
-        # Obtendo e Filtrando lista de filmes pelas datas
-        datas = self.driver.find_elements_by_xpath('//span [@class="tag tag-genre m-b-05"]')
-        for data in datas:
-            data = data.text
-            data = datetime.strptime(data, "%d/%m/%Y")
-            
-            if self.data >= data:
-                print(data)
-            
+    def titulo(self):
+        titulos = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a[2]/div/h1')
+        for titulo in titulos:
+            titulo = titulo.text
+            self.filmes.append({"titulo":titulo})
+    
     def sair(self):
         self.driver.close()
+

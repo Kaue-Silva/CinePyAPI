@@ -1,4 +1,5 @@
 from datetime import datetime
+from random import choice
 
 from app import app
 from flask import jsonify, request
@@ -21,9 +22,8 @@ class CinepyView(FlaskView):
         # Executando Consulta
         filme = EscolhaFilme(data, cidade)
         filme.pagina()
-        # Filtrando os filmes por data
-        filme.filtro_data()
+        filme.titulo()
 
-        return jsonify({"data":data, "cidade":cidade})
+        return jsonify("teste")
 
 CinepyView.register(app)
