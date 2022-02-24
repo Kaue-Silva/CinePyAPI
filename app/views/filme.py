@@ -20,21 +20,34 @@ class CinepyView(FlaskView):
         try:
             # Executando Consulta
             filme = EscolhaFilme(data, cidade)
+            # Acessando Pagina
             filme.pagina()
+            # Obtendo Titulos dos Filmes
             filme.titulo()
+            # Obtendo Todas as Datas de Estreia
             filme.data_estreia()
+            # Filtrar os Filmes por Data e Selecionar Filme Aleatoriamente
             filme.filtrar_filmes()
+            # Acessando Pagina do Filme
             filme.filme_pagina()
+            # Obtendo Sinopse
             filme.sinopse()
+            # Obtendo Diretor do Filme
             filme.diretor()
+            # Obtendo Genero do Filme
             filme.genero()
+            # Obtendo Capa e Convertendo em BASE64
             filme.capa()
+            # Fechando Navegador
             filme.sair()
             
+            # Obtendo todos os Dados Coletados
             filme = filme.filme_dados()
+            # Retornando Dados como Json
             return jsonify(filme), 200
         except:
+            # Tratamento de Erro
             return jsonify({"Error":"Ocorreu um Erro Inesperado"}), 500
 
-
+# Registrando Rota
 CinepyView.register(app)
