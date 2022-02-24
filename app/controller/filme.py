@@ -25,4 +25,8 @@ class EscolhaFilme:
         except WebDriverException:
             raise Exception("Erro com o ChromeDriver")
     
-    
+    # Acessando Pagina
+    def pagina(self):
+        # Configurando Url
+        url = f"https://www.ingresso.com/filmes?city={self.cidade}&partnership=home&target=em-cartaz"
+        self.driver.get(url)

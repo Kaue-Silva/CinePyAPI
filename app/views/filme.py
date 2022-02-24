@@ -18,6 +18,9 @@ class CinepyView(FlaskView):
         # Convertendo data para tipo Data
         data = datetime.strptime(data, "%d%m%Y")
 
+        # Executando Consulta
+        filme = EscolhaFilme(data, cidade)
+        filme.pagina()
 
         return jsonify({"data":data, "cidade":cidade})
 
