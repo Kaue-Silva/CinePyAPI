@@ -74,9 +74,11 @@ class EscolhaFilme:
         filme.click()
     
     def sinopse(self):
-        sinopse = self.driver.find_element_by_xpath('//p [@itemprop="description"]')
+        # Obtendo sinopse e adicionando ao Json
+        sinopse = self.driver.find_element_by_xpath('//div [@class="no-result-details"]/ul/p')
         sinopse = sinopse.text
         self.filme["sinopse"] = sinopse
+    
     
     def filme_dados(self):
         # Retornando filme sorteado
