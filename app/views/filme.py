@@ -23,7 +23,8 @@ class CinepyView(FlaskView):
         filme = EscolhaFilme(data, cidade)
         filme.pagina()
         filme.titulo()
-
+        filme.data_estreia()
+        
         return jsonify("teste")
 
 CinepyView.register(app)

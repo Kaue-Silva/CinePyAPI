@@ -44,6 +44,17 @@ class EscolhaFilme:
             titulo = titulo.text
             self.filmes.append({"titulo":titulo})
     
+    def data_estreia(self):
+        datas_estreia = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a/div[2]/div/span')
+        for i, data_estreia in enumerate(datas_estreia):
+            data_estreia = data_estreia.text
+            data_estreia_date = datetime.strptime(data_estreia, "%d/%m/%Y")
+            if data_estreia_date >= self.data:
+                self.filmes[i]["data_estreia"] = data_estreia
+    
+    
+    
+    
     def sair(self):
         self.driver.close()
 
