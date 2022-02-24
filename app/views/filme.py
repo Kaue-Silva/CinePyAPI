@@ -34,7 +34,7 @@ class CinepyView(FlaskView):
             filme = filme.filme_dados()
             return jsonify(filme), 200
         except:
-            return jsonify({"Error":"Ocorreu um Erro Inesperado"})
+            return jsonify({"Error":"Ocorreu um Erro Inesperado"}), 500
 
 
 CinepyView.register(app)

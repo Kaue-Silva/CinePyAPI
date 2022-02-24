@@ -21,8 +21,8 @@ options.add_argument("--disable-setuid-sandbox")
 options.add_argument("--disable-extensions")
 options.add_argument("--disable-gpu")
 options.add_argument("--ignore-certificate-errors")
-options.headless = False
-
+options.add_argument('--disable-dev-shm-usage') 
+options.headless = True
 
 class EscolhaFilme:
     filmes = []
@@ -41,7 +41,9 @@ class EscolhaFilme:
         # Configurando Url
         url = f"https://www.ingresso.com/filmes?city={self.cidade}&partnership=home&target=em-breve"
         self.driver.get(url)
-
+        # Acessando Aba Em Breve
+        self.driver.find_element_by_xpath('//*[@id="tab-coming-soon"]').click()
+    
     def titulo(self):
         # Pegando o titulo de todos os filmes
         # e Adicionando a uma lista como objeto

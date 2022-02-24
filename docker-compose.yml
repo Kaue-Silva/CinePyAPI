@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  cinepyapi:
+    build: .
+    command: python3 run.py
+    volumes:
+      - .:/code
+    ports:
+      - 5000:5000
