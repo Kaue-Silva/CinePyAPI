@@ -79,6 +79,11 @@ class EscolhaFilme:
         sinopse = sinopse.text
         self.filme["sinopse"] = sinopse
     
+    def diretor(self):
+        # Obtendo diretor e adicionando ao Json
+        diretor = self.driver.find_element_by_xpath('//div [@class="no-result-details"]/ul/li/span[@itemprop="director"]')
+        diretor = diretor.text
+        self.filme["diretor"] = diretor
     
     def filme_dados(self):
         # Retornando filme sorteado
