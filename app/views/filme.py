@@ -1,5 +1,4 @@
 from datetime import datetime
-from random import choice
 
 from app import app
 from flask import jsonify, request
@@ -18,21 +17,24 @@ class CinepyView(FlaskView):
         data = request.args.get("data")
         # Convertendo data para tipo Data
         data = datetime.strptime(data, "%d%m%Y")
+        try:
+            # Executando Consulta
+            filme = EscolhaFilme(data, cidade)
+            filme.pagina()
+            filme.titulo()
+            filme.data_estreia()
+            filme.filtrar_filmes()
+            filme.filme_pagina()
+            filme.sinopse()
+            filme.diretor()
+            filme.genero()
+            filme.capa()
+            filme.sair()
+            
+            filme = filme.filme_dados()
+            return jsonify(filme), 200
+        except:
+            return jsonify({"Error":"Ocorreu um Erro Inesperado"})
 
-        # Executando Consulta
-        filme = EscolhaFilme(data, cidade)
-        filme.pagina()
-        filme.titulo()
-        filme.data_estreia()
-        filme.filtrar_filmes()
-        filme.filme_pagina()
-        filme.sinopse()
-        filme.diretor()
-        filme.genero()
-        filme.capa()
-        filme.sair()
-        filme = filme.filme_dados()
-        print(filme)
-        return jsonify(filme)
 
 CinepyView.register(app)
