@@ -33,11 +33,11 @@ e é Claro só os Que Estarão Disponiveis na Sua Cidade.
 ### Rotas
 - Rodando Localmente
 - - Metodo GET
-- - http://127.0.0.1:5000/api/cinepy/escolha_filme?cidade=DIGITE SUA CIDADE AQUI &data=SUA DATA AQUI
+- - http://127.0.0.1:5000/api/cinepy/escolha_filme?cidade=rio-de-janeiro&data=20042022
 
-- Rodando no Servidor
+- Rodando no Servidor (Em Breve)
 - - Metodo GET
-- - http://127.0.0.1:5000/api/cinepy/escolha_filme?cidade=cidade&data=data
+- - http://127.0.0.1:5000/api/cinepy/escolha_filme?cidade=rio-de-janeiro&data=20042022
 
 ### Exemplo de Retorno
 ``` JSON
