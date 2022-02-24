@@ -27,6 +27,7 @@ class CinepyView(FlaskView):
         filme.filtrar_filmes()
         filme.filme_pagina()
         filme.sinopse()
+        filme.diretor()
         filme.sair()
         filmes = filme.filme_dados()
         
