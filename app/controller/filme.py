@@ -1,4 +1,5 @@
 from datetime import datetime
+from random import choice
 from time import sleep
 
 from selenium import webdriver
@@ -52,7 +53,19 @@ class EscolhaFilme:
             if data_estreia_date >= self.data:
                 self.filmes[i]["data_estreia"] = data_estreia
     
+    def filtrar_filmes(self):
+        filmes = []
+        # Filtrando filmes por data
+        for filme in self.filmes:
+            if "data_estreia" in filme:
+                filmes.append(filme)
+        
+        # Sorteando filme aleatorio
+        self.filme = choice(filmes)
     
+    def filme_dados(self):
+        # Retornando filme sorteado
+        return self.filme
     
     
     def sair(self):
