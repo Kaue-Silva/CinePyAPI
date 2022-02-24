@@ -84,6 +84,19 @@ class EscolhaFilme:
         diretor = self.driver.find_element_by_xpath('//div [@class="no-result-details"]/ul/li/span[@itemprop="director"]')
         diretor = diretor.text
         self.filme["diretor"] = diretor
+
+    def genero(self):
+        # Variavel acumuladora
+        generos_text = ""
+        # Generos do Filme
+        generos = self.driver.find_elements_by_xpath('//div [@class="synopsis-tags hidden-sm-down stags-1"]')
+        for genero in generos:
+            # Obtendo genero em texto
+            genero = genero.text
+            # Concatenando generos
+            generos_text += genero
+        
+        self.filme["generos"] = generos_text.title()
     
     def filme_dados(self):
         # Retornando filme sorteado
