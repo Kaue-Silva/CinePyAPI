@@ -1,5 +1,8 @@
 # CinePy
 ## Descrição
+[![NPM](https://img.shields.io/badge/license-GNU-green)](https://github.com/Kaue-Silva/CinePyAPI/blob/master/LICENSE)
+
+
 API Construida em Python
 
 Sua intenção e Sortear o filme baseado nas suas preferencias
