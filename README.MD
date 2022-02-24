@@ -29,7 +29,7 @@ Necessario Inicializar Docker e Ter o Git
 - - Metodo GET
 - - https://localhost:5000/api/filme?cidade=Cidade&data=dia/mes/ano
 
-## Hospeado
+## Hospedado
 - Heroku
 
 https://www.linkedin.com/in/kaue-silva2004/
