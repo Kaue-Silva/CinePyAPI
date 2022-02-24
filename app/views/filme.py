@@ -26,7 +26,7 @@ class CinepyView(FlaskView):
         filme.data_estreia()
         filme.filtrar_filmes()
         filme.filme_pagina()
-        
+        filme.sinopse()
         filmes = filme.filme_dados()
         
         return jsonify(filmes)

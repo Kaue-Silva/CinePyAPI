@@ -73,6 +73,10 @@ class EscolhaFilme:
         filme = self.driver.find_element_by_xpath(f'//h1 [text()="{filme_sorteado}"]')
         filme.click()
     
+    def sinopse(self):
+        sinopse = self.driver.find_element_by_xpath('//p [@itemprop="description"]')
+        sinopse = sinopse.text
+        self.filme["sinopse"] = sinopse
     
     def filme_dados(self):
         # Retornando filme sorteado
