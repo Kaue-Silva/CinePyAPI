@@ -23,11 +23,11 @@ Necessario Inicializar Docker e Ter o Git
 ### Rotas
 - Rodando Localmente
 - - Metodo GET
-- - https://localhost:5000/api/filme?cidade=Cidade&data=dia/mes/ano
+- - http://127.0.0.1:5000/api/cinepy/escolha_filme?cidade=cidade&data=data
 
 - Rodando no Servidor
 - - Metodo GET
-- - https://localhost:5000/api/filme?cidade=Cidade&data=dia/mes/ano
+- - http://127.0.0.1:5000/api/cinepy/escolha_filme?cidade=cidade&data=data
 
 ## Hospedado
 - Heroku
