@@ -1,10 +1,8 @@
 import base64
 from datetime import datetime
 from random import choice
-from time import sleep
 from urllib import request
 
-from itsdangerous import base64_encode
 from selenium import webdriver
 from selenium.common.exceptions import (StaleElementReferenceException,
                                         WebDriverException)
