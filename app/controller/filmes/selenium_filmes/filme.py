@@ -23,7 +23,7 @@ options.add_argument('--disable-dev-shm-usage')
 options.headless = True
 
 class EscolhaFilme:
-    filmes = []
+    filme = []
     
     # Inicializando Selenium
     def __init__(self, data, cidade):
@@ -42,6 +42,9 @@ class EscolhaFilme:
         # Acessando Aba Em Breve
         self.driver.find_element_by_xpath('//*[@id="tab-coming-soon"]').click()
     
+    def filmes_para_sorteio(self):
+        self.filmes = self.driver.find_elements_by_xpath('//*[@id="coming-soon"]/ul/li')
+   
     def titulo(self):
         # Pegando o titulo de todos os filmes
         # e Adicionando a uma lista como objeto
