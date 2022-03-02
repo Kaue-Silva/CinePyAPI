@@ -3,7 +3,6 @@ from .selenium_filmes.filme import EscolhaFilme
 def escolha_filme(data, cidade):
     filme = EscolhaFilme(data, cidade)
     filme.pagina()
-    filme.sorteio_filmes()
     filme.titulo()
     filme.data_estreia()
     filme.filtrar_filmes()
