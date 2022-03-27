@@ -1,6 +1,10 @@
+# Orientar tudo ao objeto do selenium
+
+
+
 import base64
 from datetime import datetime
-from random import choice
+from random import choice, randint
 from urllib import request
 
 from selenium import webdriver
@@ -25,59 +29,86 @@ options.headless = True
 class EscolhaFilme:
     filme = []
     
-    # Inicializando Selenium
     def __init__(self, data, cidade):
         try:
-            self.driver = webdriver.Chrome(options=options)
-            self.data = data  
+            self.driver = webdriver.Chrome(options=options)  
+            self.data = datetime.strptime(data, "%d%m%Y")
             self.cidade = cidade
+        
         except WebDriverException:
             raise Exception("Erro com o ChromeDriver")
     
-    # Acessando Pagina
     def pagina(self):
         # Configurando Url
         url = f"https://www.ingresso.com/filmes?city={self.cidade}&partnership=home&target=em-breve"
         self.driver.get(url)
+    
+    def btn_embreve(self):
         # Acessando Aba Em Breve
         self.driver.find_element_by_xpath('//*[@id="tab-coming-soon"]').click()
     
-    def filmes_para_sorteio(self):
-        self.filmes = self.driver.find_elements_by_xpath('//*[@id="coming-soon"]/ul/li')
-   
-    def titulo(self):
-        # Pegando o titulo de todos os filmes
-        # e Adicionando a uma lista como objeto
-        titulos = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a[2]/div/h1')
-        for titulo in titulos:
-            titulo = titulo.text
-            titulo = str(titulo).strip()
-            self.filmes.append({"titulo":titulo})
+    def fechar_publicidade(self):
+        try:
+            btn_anucio = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="midia-presite"]/header/div/a'))
+            )
+            btn_anucio.click()
+        except:
+            pass
     
-    def data_estreia(self):
-        # Pegando a data de todos os filmes
-        # e Adicionando a uma lista como objeto
-        datas_estreia = self.driver.find_elements_by_xpath('//ul [@class="movie-list-small"]/li/article/a/div[2]/div/span')
-        for i, data_estreia in enumerate(datas_estreia):
-            data_estreia = data_estreia.text
-            data_estreia_date = datetime.strptime(data_estreia, "%d/%m/%Y")
-            if data_estreia_date >= self.data:
-                self.filmes[i]["data_estreia"] = data_estreia
-    
-    def filtrar_filmes(self):
-        filmes = []
-        # Filtrando filmes por data
-        for filme in self.filmes:
-            if "data_estreia" in filme:
-                filmes.append(filme)
+    def get_data_estreia(self, filme):
+        filme_texto = filme.text
+        filme_texto = filme_texto.split("\n")
+        filme_data = filme_texto[0]
+        return filme_data
+
+    def filtro_data(self, data_estreia):
+        try:
+            data_estreia = datetime.strptime(data_estreia, "%d/%m/%Y")
+            if data_estreia >= self.data:
+                return True
+            else:
+                return False
+        except:
+            return False
         
-        # Sorteando filme aleatorio
-        self.filme = choice(filmes)
+    def get_filme_sorteado(self, filmes):
+        qtd_filmes = len(filmes)
+        filme_escolhido = randint(0, qtd_filmes - 1)
+        filme_escolhido = filmes[filme_escolhido]
+        return filme_escolhido
     
-    # Entrando na pagina do filme sorteado
+    def get_titulo_filme(self, filme):
+        filme = filme.text
+        filme = filme.split("\n")
+        filme_titulo = filme[1]
+        return filme_titulo
+    
+    def get_elemento_filme(self, filme):
+        return filme
+    
+    def filmes_sorteio(self):
+        filmes = self.driver.find_elements_by_xpath('//*[@id="coming-soon"]/ul/li')
+        for filme in filmes:
+            filme_data = self.get_data_estreia(filme)
+            filtro_data = self.filtro_data(filme_data)
+            if not filtro_data:
+                filme_fora_da_data = filmes.index(filme)
+                filmes.pop(filme_fora_da_data)
+        
+        return filmes
+        
+    def filme_selecionado(self):
+        filmes = self.filmes_sorteio()
+        filme_ecolhido = self.get_filme_sorteado(filmes)
+        titulo = self.get_titulo_filme(filme_ecolhido)
+        data = self.get_data_estreia(filme_ecolhido)
+        elemento = self.get_elemento_filme(filme_ecolhido)
+        self.filme = {"titulo":titulo,"data":data, "elemento":elemento} 
+    
     def filme_pagina(self):
-        filme_sorteado = self.filme['titulo']
-        filme = self.driver.find_element_by_xpath(f'//h1 [text()="{filme_sorteado}"]')
+        filme = self.filme["elemento"]
+        self.filme.pop("elemento")
         filme.click()
     
     def sinopse(self):
@@ -127,7 +158,5 @@ class EscolhaFilme:
         # Retornando filme sorteado
         return self.filme
     
-    
     def sair(self):
         self.driver.close()
-
